@@ -1,38 +1,40 @@
-import plotly.plotly as py
+from plotly.offline import download_plotlyjs, init_notebook_mode, plot
+from plotly.graph_objs import *
 import pandas as pd
 
-df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2011_us_ag_exports.csv')
+df = pd.read_csv('2016VoteData.csv')
 
 for col in df.columns:
     df[col] = df[col].astype(str)
 
-scl = [[0.0, 'rgb(242,240,247)'],[0.2, 'rgb(218,218,235)'],[0.4, 'rgb(188,189,220)'],\
-            [0.6, 'rgb(158,154,200)'],[0.8, 'rgb(117,107,177)'],[1.0, 'rgb(84,39,143)']]
+scl = [[0.0, 'rgb(140,81,10)'],[0.105, 'rgb(255,255,255)'],[1.0, 'rgb(1,102,94)']]
 
-df['text'] = df['state'] + '<br>' +\
-    'Beef '+df['beef']+' Dairy '+df['dairy']+'<br>'+\
-    'Fruits '+df['total fruits']+' Veggies ' + df['total veggies']+'<br>'+\
-    'Wheat '+df['wheat']+' Corn '+df['corn']
+df['text'] = df['State'] + '<br>' +\
+    'Electoral Votes : '+df['Electoral-Votes']+ '<br>'+\
+    'Estimated Ballots Cast In 2016 : '+df['Estimated-Ballots-Cast-In-2016']+ '<br>'+\
+    '2016 Ballots Cast Per Elector : '+df['Voters-Per-Elector']+ '<br>'+\
+    'Weight : '+df['Weight']+ '%<br>'
 
 data = [ dict(
         type='choropleth',
         colorscale = scl,
         autocolorscale = False,
-        locations = df['code'],
-        z = df['total exports'].astype(float),
+        locations = df['Postal-Code'],
+        z = df['Weight'].astype(float),
         locationmode = 'USA-states',
+        name = df['Weight'],
         text = df['text'],
         marker = dict(
             line = dict (
-                color = 'rgb(255,255,255)',
+                color = 'rgb(241,241,241)',
                 width = 2
             ) ),
         colorbar = dict(
-            title = "Millions USD")
+            title = "Weight % compared to U.S. average")
         ) ]
 
 layout = dict(
-        title = '2011 US Agriculture Exports by State<br>(Hover for breakdown)',
+        title = '2016 Electoral Power per State Based on Voter Turnout',
         geo = dict(
             scope='usa',
             projection=dict( type='albers usa' ),
@@ -41,4 +43,4 @@ layout = dict(
              )
 
 fig = dict( data=data, layout=layout )
-py.iplot( fig, filename='d3-cloropleth-map' )
+plot( fig, filename='Interactive/Electoral-Power-By-Voter-Turnout.html' )
