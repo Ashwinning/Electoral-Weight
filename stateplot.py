@@ -34,7 +34,7 @@ data = [ dict(
         ) ]
 
 layout = dict(
-        title = '2016 Electoral Power per State Based on Voter Turnout',
+        title = '2016 Electoral Power by State Based on Voter Turnout',
         geo = dict(
             scope='usa',
             projection=dict( type='albers usa' ),
