@@ -56,5 +56,5 @@ layout = dict(
             lakecolor = 'rgb(255, 255, 255)'),
              )
 
-fig = Figure( data=trace2, layout=layout )
-plot( fig, filename='Interactive/Electoral-Power-By-Voter-Turnout.html' )
+fig = Figure( data=trace1, layout=layout )
+plot( fig, filename='docs/Electoral-Power-By-Voter-Turnout.html' )
