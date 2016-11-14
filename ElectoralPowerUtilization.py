@@ -7,7 +7,7 @@ df = pd.read_csv('2016VoteData.csv')
 for col in df.columns:
     df[col] = df[col].astype(str)
 
-scl = [[0.0, 'rgb(140,81,10)'],[0.105, 'rgb(255,255,255)'],[1.0, 'rgb(1,102,94)']]
+scl = [[0.0, 'rgb(140,81,10)'],[0.32, 'rgb(255,255,255)'],[1.0, 'rgb(1,102,94)']]
 
 df['text'] = df['State'] + '<br>' +\
     'Electoral Votes : '+df['Electoral-Votes']+ '<br>'+\
@@ -47,4 +47,4 @@ layout = dict(
              )
 
 fig = dict( data=data, layout=layout )
-plot( fig, filename='Interactive/Electoral-Power-Utilization.html' )
+plot( fig, filename='docs/Electoral-Power-Utilization.html' )
