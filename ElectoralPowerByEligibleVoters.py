@@ -11,18 +11,18 @@ scl = [[0.0, 'rgb(140,81,10)'],[0.105, 'rgb(255,255,255)'],[1.0, 'rgb(1,102,94)'
 
 df['text'] = df['State'] + '<br>' +\
     'Electoral Votes : '+df['Electoral-Votes']+ '<br>'+\
-    'Estimated Ballots Cast In 2016 : '+df['Estimated-Ballots-Cast-In-2016']+ '<br>'+\
-    '2016 Ballots Cast Per Elector : '+df['Voters-Per-Elector']+ '<br>'+\
-    'Weight : '+df['Weight']+ '%<br>'
+    'Voting Eligible Population In 2016 : '+df['Voting-Eligible-Population']+ '<br>'+\
+    '2016 Eligible Voters Per Elector : '+df['Eligible-Voters-Per-Elector']+ '<br>'+\
+    'Weight By Eligibility : '+df['Weight-By-Eligibility']+ '%<br>'
 
-trace1 = [dict(
+data = [ dict(
         type='choropleth',
         colorscale = scl,
         autocolorscale = False,
         locations = df['Postal-Code'],
-        z = df['Weight'].astype(float),
+        z = df['Weight-By-Eligibility'].astype(float),
         locationmode = 'USA-states',
-        name = df['Weight'],
+        name = df['Weight-By-Eligibility'],
         text = df['text'],
         marker = dict(
             line = dict (
@@ -30,25 +30,11 @@ trace1 = [dict(
                 width = 2
             ) ),
         colorbar = dict(
-            title = "Weight % compared to U.S. average")
-        )]
-
-trace2 = [dict(
-        type='scattergeo',
-        locations=df['Postal-Code'],
-        locationmode='USA-states',
-        name=df['Weight'],
-        text=df['Weight']+'%',
-        mode='text',
-        marker = dict(
-            line = dict (
-                color = 'rgb(241,241,241)',
-                width = 2
-            ) )
-)]
+            title = "Weight By Eligibility % compared to U.S. average")
+        ) ]
 
 layout = dict(
-        title = '2016 Electoral Power by State Based on Voter Turnout',
+        title = '2016 Electoral Power by State Based on Eligible Voters',
         geo = dict(
             scope='usa',
             projection=dict( type='albers usa' ),
@@ -56,5 +42,5 @@ layout = dict(
             lakecolor = 'rgb(255, 255, 255)'),
              )
 
-fig = Figure( data=trace2, layout=layout )
-plot( fig, filename='Interactive/Electoral-Power-By-Voter-Turnout.html' )
+fig = dict( data=data, layout=layout )
+plot( fig, filename='Interactive/Electoral-Power-By-Eligible-Voters.html' )
