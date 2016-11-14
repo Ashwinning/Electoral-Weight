@@ -11,18 +11,22 @@ scl = [[0.0, 'rgb(140,81,10)'],[0.105, 'rgb(255,255,255)'],[1.0, 'rgb(1,102,94)'
 
 df['text'] = df['State'] + '<br>' +\
     'Electoral Votes : '+df['Electoral-Votes']+ '<br>'+\
+    'Estimated Ballots Cast In 2016 : '+df['Estimated-Ballots-Cast-In-2016']+ '<br>'+\
+    '2016 Ballots Cast Per Elector : '+df['Voters-Per-Elector']+ '<br>'+\
     'Voting Eligible Population In 2016 : '+df['Voting-Eligible-Population']+ '<br>'+\
     '2016 Eligible Voters Per Elector : '+df['Eligible-Voters-Per-Elector']+ '<br>'+\
-    'Weight By Eligibility : '+df['Weight-By-Eligibility']+ '%<br>'
+    'Weight by Turnout : '+df['Weight']+ '%<br>'+\
+    'Weight By Eligibility : '+df['Weight-By-Eligibility']+ '%<br>' +\
+    'Power Utilization : '+df['Power Utilization']+ '%<br>'
 
 data = [ dict(
         type='choropleth',
         colorscale = scl,
         autocolorscale = False,
         locations = df['Postal-Code'],
-        z = df['Weight-By-Eligibility'].astype(float),
+        z = df['Power Utilization'].astype(float),
         locationmode = 'USA-states',
-        name = df['Weight-By-Eligibility'],
+        name = df['Power Utilization'],
         text = df['text'],
         marker = dict(
             line = dict (
@@ -30,11 +34,11 @@ data = [ dict(
                 width = 2
             ) ),
         colorbar = dict(
-            title = "Weight By Eligibility % compared to U.S. average")
+            title = "Power Utilization % Compared to U.S. Average")
         ) ]
 
 layout = dict(
-        title = '2016 Electoral Power by State Based on Eligible Voters',
+        title = '2016 Electoral Power Utilization %.',
         geo = dict(
             scope='usa',
             projection=dict( type='albers usa' ),
@@ -43,4 +47,4 @@ layout = dict(
              )
 
 fig = dict( data=data, layout=layout )
-plot( fig, filename='Interactive/Electoral-Power-By-Eligible-Voters.html' )
+plot( fig, filename='Interactive/Electoral-Power-Utilization.html' )
